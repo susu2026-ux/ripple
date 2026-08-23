@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <title>Register | Ripple</title>
+    </head>
+
+    <body>
+        <main class="auth-page">
+            <div class="auth-card">
+                <a href="/" class="auth-logo">Ripple</a>
+
+                <h1>Create your account</h1>
+                <p>Start turning your projects into measurable impact.</p>
+
+                <form action="/register" method="post">
+                    <input
+                        autocomplete="off"
+                        autofocus
+                        name="username"
+                        placeholder="Username"
+                        type="text"
+                    >
+
+                    <input
+                        name="password"
+                        placeholder="Password"
+                        type="password"
+                    >
+
+                    <input
+                        name="confirmation"
+                        placeholder="Confirm password"
+                        type="password"
+                    >
+
+                    <button type="submit">Create Account</button>
+                </form>
+
+                <p class="auth-switch">
+                    Already have an account? <a href="/login">Log in</a>
+                </p>
+            </div>
+        </main>
+    </body>
+</html>
