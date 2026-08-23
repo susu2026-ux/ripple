@@ -1,12 +1,53 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Ripple</h1>
-    <p>Turn action into impack.</p>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <title>Ripple | Turn Action Into Impact</title>
+    </head>
+
+    <body>
+        <nav>
+            <div class="logo">Ripple</div>
+
+            <div class="nav-links">
+                <a href="/login">Log In</a>
+                <a href="/register" class="button">Get Started</a>
+            </div>
+        </nav>
+
+        <main>
+            <section class="hero">
+                <p class="eyebrow">PROJECTS WITH PURPOSE</p>
+
+                <h1>Turn action into <span>impact.</span></h1>
+
+                <p class="hero-text">
+                    Organize meaningful projects, stay ahead of important
+                    tasks, and see the difference your work creates.
+                </p>
+
+                <a href="/register" class="primary-button">Start a Project</a>
+            </section>
+
+            <section class="features">
+                <div class="feature">
+                    <h2>Organize</h2>
+                    <p>Keep projects, tasks, and deadlines in one place.</p>
+                </div>
+
+                <div class="feature">
+                    <h2>Prioritize</h2>
+                    <p>Know which projects need your attention most.</p>
+                </div>
+
+                <div class="feature">
+                    <h2>Measure</h2>
+                    <p>Track volunteer hours, progress, and people reached.</p>
+                </div>
+            </section>
+        </main>
+    </body>
 </html>
