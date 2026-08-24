@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Project | Ripple</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+
+    <div class="project-container">
+        <h1>Create a New Project</h1>
+        <p>Turn an idea into impact.</p>
+
+        <form action="/project" method="post">
+
+            <label for="title">Project Name</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Enter project name"
+                required
+            >
+
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                placeholder="What is this project about?"
+                required
+            ></textarea>
+
+            <button type="submit">Create Project</button>
+
+        </form>
+
+        <a href="/">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

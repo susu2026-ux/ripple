@@ -18,8 +18,17 @@ def get_db():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    if "user_id" not in session:
+        return redirect("/login")
 
+    db = get_db()
+    projects = db.execute(
+        "SELECT * FROM projects WHERE user_id = ?",
+        (session["user_id"],)
+    ).fetchall()
+    db.close()
+
+    return render_template("index.html", projects=projects)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -64,16 +73,11 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        if not username or not password:
-            return "Please enter your username and password", 400
-
         db = get_db()
-
         user = db.execute(
             "SELECT * FROM users WHERE username = ?",
             (username,)
         ).fetchone()
-
         db.close()
 
         if user is None or not check_password_hash(user["hash"], password):
@@ -85,3 +89,25 @@ def login():
         return redirect("/")
 
     return render_template("login.html")
+
+
+@app.route("/project", methods=["GET", "POST"])
+def project():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        description = request.form.get("description")
+
+        db = get_db()
+        db.execute(
+            "INSERT INTO projects (user_id, title, description) VALUES (?, ?, ?)",
+            (session["user_id"], title, description)
+        )
+        db.commit()
+        db.close()
+
+        return redirect("/")
+
+    return render_template("project.html")
