@@ -283,3 +283,75 @@ nav {
     font-weight: bold;
     padding: 14px;
 }
+.project-card-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card-link:hover .project-card {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.project-card span {
+    display: inline-block;
+    font-weight: 600;
+    margin-top: 15px;
+}
+.task-item {
+    align-items: center;
+    background: white;
+    border: 1px solid #e1e7e3;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding: 16px;
+}
+
+.task-toggle {
+    background: none;
+    border: 1px solid #246b45;
+    border-radius: 7px;
+    color: #246b45;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+
+.task-item.completed span {
+    color: #8a948e;
+    text-decoration: line-through;
+}
+.progress-section {
+    margin: 30px 0;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    background-color: #e1e7e3;
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background-color: #246b45;
+    border-radius: 20px;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.progress-section p {
+    color: #68736c;
+    font-size: 14px;
+    margin-top: 8px;
+}

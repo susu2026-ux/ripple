@@ -111,3 +111,102 @@ def project():
         return redirect("/")
 
     return render_template("project.html")
+
+@app.route("/project/<int:project_id>")
+def project_detail(project_id):
+    if "user_id" not in session:
+        return redirect("/login")
+
+    db = get_db()
+
+    project = db.execute(
+        "SELECT * FROM projects WHERE id = ? AND user_id = ?",
+        (project_id, session["user_id"])
+    ).fetchone()
+
+    if project is None:
+        db.close()
+        return "Project not found", 404
+
+    tasks = db.execute(
+        "SELECT * FROM tasks WHERE project_id = ? ORDER BY id",
+        (project_id,)
+    ).fetchall()
+
+    total_tasks = len(tasks)
+    completed_tasks = sum(task["completed"] for task in tasks)
+
+    if total_tasks > 0:
+        progress = int((completed_tasks / total_tasks) * 100)
+    else:
+        progress = 0
+
+    db.close()
+
+    return render_template(
+        "project_detail.html",
+        project=project,
+        tasks=tasks,
+        progress=progress,
+        completed_tasks=completed_tasks,
+        total_tasks=total_tasks
+    )
+@app.route("/project/<int:project_id>/task", methods=["POST"])
+def add_task(project_id):
+    if "user_id" not in session:
+        return redirect("/login")
+
+    title = request.form.get("title")
+
+    db = get_db()
+
+    project = db.execute(
+        "SELECT * FROM projects WHERE id = ? AND user_id = ?",
+        (project_id, session["user_id"])
+    ).fetchone()
+
+    if project is None:
+        db.close()
+        return "Project not found", 404
+
+    if title:
+        db.execute(
+            "INSERT INTO tasks (project_id, title) VALUES (?, ?)",
+            (project_id, title)
+        )
+        db.commit()
+
+    db.close()
+
+    return redirect(f"/project/{project_id}")
+@app.route("/task/<int:task_id>/toggle", methods=["POST"])
+def toggle_task(task_id):
+    if "user_id" not in session:
+        return redirect("/login")
+
+    db = get_db()
+
+    task = db.execute(
+        """
+        SELECT tasks.*
+        FROM tasks
+        JOIN projects ON tasks.project_id = projects.id
+        WHERE tasks.id = ? AND projects.user_id = ?
+        """,
+        (task_id, session["user_id"])
+    ).fetchone()
+
+    if task is None:
+        db.close()
+        return "Task not found", 404
+
+    new_status = 0 if task["completed"] else 1
+
+    db.execute(
+        "UPDATE tasks SET completed = ? WHERE id = ?",
+        (new_status, task_id)
+    )
+    db.commit()
+    db.close()
+
+    return redirect(f"/project/{task['project_id']}")
