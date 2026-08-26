@@ -18,19 +18,37 @@
             <h1>{{ project["title"] }}</h1>
             <p>{{ project["description"] }}</p>
         </section>
+
+        <!-- PROJECT PROGRESS -->
         <section class="progress-section">
-    <div class="progress-info">
-        <span>Project Progress</span>
-        <strong>{{ progress }}%</strong>
-    </div>
 
-    <div class="progress-bar">
-        <div class="progress-fill" style="width: {{ progress }}%;"></div>
-    </div>
+            <div class="progress-info">
+                <span>Project Progress</span>
+                <strong>{{ progress }}%</strong>
+            </div>
 
-    <p>{{ completed_tasks }} of {{ total_tasks }} tasks completed</p>
-</section>
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="width: {{ progress }}%;"
+                ></div>
+            </div>
 
+            <p>
+                {{ completed_tasks }} of {{ total_tasks }} tasks completed
+            </p>
+
+        </section>
+
+        <!-- RECORD IMPACT -->
+        <a
+            href="/project/{{ project['id'] }}/impact"
+            class="primary-button"
+        >
+            + Record Impact
+        </a>
+
+        <!-- TASKS -->
         <section class="tasks-section">
 
             <div class="tasks-header">
@@ -51,28 +69,40 @@
                     placeholder="Add a new task..."
                     required
                 >
-                <button type="submit">Add Task</button>
+
+                <button type="submit">
+                    Add Task
+                </button>
             </form>
 
             <div class="task-list">
 
                 {% for task in tasks %}
 
-    <div class="task-item {% if task['completed'] %}completed{% endif %}">
-        <span>{{ task["title"] }}</span>
+                    <div class="task-item {% if task['completed'] %}completed{% endif %}">
 
-        <form action="/task/{{ task['id'] }}/toggle" method="post">
-            <button type="submit" class="task-toggle">
-                {% if task["completed"] %}
-                    ✓ Completed
+                        <span>{{ task["title"] }}</span>
+
+                        <form
+                            action="/task/{{ task['id'] }}/toggle"
+                            method="post"
+                        >
+                            <button
+                                type="submit"
+                                class="task-toggle"
+                            >
+                                {% if task["completed"] %}
+                                    ✓ Completed
+                                {% else %}
+                                    Mark Complete
+                                {% endif %}
+                            </button>
+                        </form>
+
+                    </div>
+
                 {% else %}
-                    Mark Complete
-                {% endif %}
-            </button>
-        </form>
-    </div>
 
-{% else %}
                     <div class="empty-tasks">
                         <h3>No tasks yet</h3>
                         <p>Add your first task above.</p>

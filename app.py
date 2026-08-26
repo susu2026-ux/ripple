@@ -210,3 +210,44 @@ def toggle_task(task_id):
     db.close()
 
     return redirect(f"/project/{task['project_id']}")
+
+@app.route("/project/<int:project_id>/impact", methods=["GET", "POST"])
+def impact(project_id):
+    if "user_id" not in session:
+        return redirect("/login")
+
+    db = get_db()
+
+    project = db.execute(
+        "SELECT * FROM projects WHERE id = ? AND user_id = ?",
+        (project_id, session["user_id"])
+    ).fetchone()
+
+    if project is None:
+        db.close()
+        return "Project not found", 404
+
+    if request.method == "POST":
+        volunteer_hours = request.form.get("volunteer_hours")
+        people_reached = request.form.get("people_reached")
+
+        db.execute(
+            """
+            INSERT INTO impact_records
+            (project_id, volunteer_hours, people_reached)
+            VALUES (?, ?, ?)
+            """,
+            (project_id, volunteer_hours, people_reached)
+        )
+
+        db.commit()
+        db.close()
+
+        return redirect(f"/project/{project_id}")
+
+    db.close()
+
+    return render_template(
+        "impact.html",
+        project=project
+    )
