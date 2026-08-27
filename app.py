@@ -133,6 +133,17 @@ def project_detail(project_id):
         (project_id,)
     ).fetchall()
 
+    impact = db.execute(
+        """
+        SELECT
+            COALESCE(SUM(volunteer_hours), 0) AS total_hours,
+            COALESCE(SUM(people_reached), 0) AS total_people
+        FROM impact_records
+        WHERE project_id = ?
+        """,
+        (project_id,)
+    ).fetchone()
+
     total_tasks = len(tasks)
     completed_tasks = sum(task["completed"] for task in tasks)
 
@@ -144,13 +155,14 @@ def project_detail(project_id):
     db.close()
 
     return render_template(
-        "project_detail.html",
-        project=project,
-        tasks=tasks,
-        progress=progress,
-        completed_tasks=completed_tasks,
-        total_tasks=total_tasks
-    )
+    "project_detail.html",
+    project=project,
+    tasks=tasks,
+    progress=progress,
+    completed_tasks=completed_tasks,
+    total_tasks=total_tasks,
+    impact=impact
+)
 @app.route("/project/<int:project_id>/task", methods=["POST"])
 def add_task(project_id):
     if "user_id" not in session:

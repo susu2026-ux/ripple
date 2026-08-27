@@ -355,3 +355,38 @@ nav {
     font-size: 14px;
     margin-top: 8px;
 }
+/* Impact Summary */
+
+.impact-summary {
+    margin: 32px 0;
+}
+
+.impact-summary h2 {
+    margin-bottom: 16px;
+}
+
+.impact-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.impact-stat {
+    background: white;
+    border: 1px solid #e1e7e3;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.impact-number {
+    display: block;
+    color: #246b45;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.impact-label {
+    color: #68736c;
+    font-size: 14px;
+}
