@@ -390,3 +390,55 @@ nav {
     color: #68736c;
     font-size: 14px;
 }
+.card-progress-bar {
+    background: #e1e7e3;
+    border-radius: 10px;
+    height: 7px;
+    margin: 12px 0 16px;
+    overflow: hidden;
+}
+
+.card-progress-fill {
+    background: #246b45;
+    border-radius: 10px;
+    height: 100%;
+}
+.project-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+/* Part 8 final polish */
+
+.project-card-stats {
+    color: #68736c;
+    font-size: 14px;
+    margin-top: 16px;
+}
+
+.project-card h3 {
+    margin-bottom: 8px;
+}
+
+.project-card-link {
+    display: block;
+}
+
+.project-navigation .back-link {
+    margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+    .impact-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-navigation {
+        gap: 16px;
+    }
+}

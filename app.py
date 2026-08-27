@@ -22,10 +22,22 @@ def index():
         return redirect("/login")
 
     db = get_db()
+
     projects = db.execute(
-        "SELECT * FROM projects WHERE user_id = ?",
+        """
+        SELECT
+            projects.*,
+            COUNT(tasks.id) AS total_tasks,
+            SUM(CASE WHEN tasks.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks
+        FROM projects
+        LEFT JOIN tasks ON projects.id = tasks.project_id
+        WHERE projects.user_id = ?
+        GROUP BY projects.id
+        ORDER BY projects.id DESC
+        """,
         (session["user_id"],)
     ).fetchall()
+
     db.close()
 
     return render_template("index.html", projects=projects)
@@ -263,3 +275,7 @@ def impact(project_id):
         "impact.html",
         project=project
     )
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")

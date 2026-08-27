@@ -13,9 +13,9 @@
             <div class="logo">Ripple</div>
 
             <div class="nav-links">
-                <a href="/login">Log In</a>
-                <a href="/register" class="button">Get Started</a>
-            </div>
+    <a href="/">Dashboard</a>
+    <a href="/logout" class="button">Log Out</a>
+</div>
         </nav>
 
         <main>
@@ -66,6 +66,23 @@
         <div class="project-card">
             <h3>{{ project["title"] }}</h3>
             <p>{{ project["description"] }}</p>
+
+            <div class="project-card-stats">
+    <span>
+        {{ project["completed_tasks"] }} of {{ project["total_tasks"] }} tasks completed
+    </span>
+</div>
+<div class="card-progress-bar">
+    <div
+        class="card-progress-fill"
+        style="width:
+        {% if project['total_tasks'] > 0 %}
+            {{ (project['completed_tasks'] / project['total_tasks'] * 100) | int }}%
+        {% else %}
+            0%
+        {% endif %};"
+    ></div>
+</div>
             <span>View Project →</span>
         </div>
     </a>
