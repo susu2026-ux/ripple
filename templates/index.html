@@ -13,9 +13,9 @@
             <div class="logo">Ripple</div>
 
             <div class="nav-links">
-    <a href="/">Dashboard</a>
-    <a href="/logout" class="button">Log Out</a>
-</div>
+                <a href="/">Dashboard</a>
+                <a href="/logout" class="button">Log Out</a>
+            </div>
         </nav>
 
         <main>
@@ -29,7 +29,7 @@
                     tasks, and see the difference your work creates.
                 </p>
 
-                <a href="/register" class="primary-button">Start a Project</a>
+                <a href="/project" class="primary-button">Start a Project</a>
             </section>
 
             <section class="features">
@@ -48,49 +48,58 @@
                     <p>Track volunteer hours, progress, and people reached.</p>
                 </div>
             </section>
+
+            <section class="projects-section">
+                <div class="projects-header">
+                    <div>
+                        <h2>Your Projects</h2>
+                        <p>Track your work and the impact you're creating.</p>
+                    </div>
+
+                    <a href="/project" class="new-project-button">+ New Project</a>
+                </div>
+
+                <div class="projects-grid">
+                    {% for project in projects %}
+
+                        <a href="/project/{{ project['id'] }}" class="project-card-link">
+                            <div class="project-card">
+                                <h3>{{ project["title"] }}</h3>
+                                <p>{{ project["description"] }}</p>
+
+                                <div class="project-card-stats">
+                                    <span>
+                                        {{ project["completed_tasks"] }} of
+                                        {{ project["total_tasks"] }} tasks completed
+                                    </span>
+                                </div>
+
+                                <div class="card-progress-bar">
+                                    <div
+                                        class="card-progress-fill"
+                                        style="width:
+                                        {% if project['total_tasks'] > 0 %}
+                                            {{ (project['completed_tasks'] / project['total_tasks'] * 100) | int }}%
+                                        {% else %}
+                                            0%
+                                        {% endif %};"
+                                    ></div>
+                                </div>
+
+                                <span>View Project →</span>
+                            </div>
+                        </a>
+
+                    {% else %}
+
+                        <div class="empty-projects">
+                            <h3>No projects yet</h3>
+                            <p>Create your first project to get started.</p>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </section>
         </main>
     </body>
-<section class="projects-section">
-    <div class="projects-header">
-        <div>
-            <h2>Your Projects</h2>
-            <p>Track your work and the impact you're creating.</p>
-        </div>
-
-        <a href="/project" class="new-project-button">+ New Project</a>
-    </div>
-
-    <div class="projects-grid">
-        {% for project in projects %}
-    <a href="/project/{{ project['id'] }}" class="project-card-link">
-        <div class="project-card">
-            <h3>{{ project["title"] }}</h3>
-            <p>{{ project["description"] }}</p>
-
-            <div class="project-card-stats">
-    <span>
-        {{ project["completed_tasks"] }} of {{ project["total_tasks"] }} tasks completed
-    </span>
-</div>
-<div class="card-progress-bar">
-    <div
-        class="card-progress-fill"
-        style="width:
-        {% if project['total_tasks'] > 0 %}
-            {{ (project['completed_tasks'] / project['total_tasks'] * 100) | int }}%
-        {% else %}
-            0%
-        {% endif %};"
-    ></div>
-</div>
-            <span>View Project →</span>
-        </div>
-    </a>
-{% else %}
-            <div class="empty-projects">
-                <h3>No projects yet</h3>
-                <p>Create your first project to get started.</p>
-            </div>
-        {% endfor %}
-    </div>
-</section>
+</html>
